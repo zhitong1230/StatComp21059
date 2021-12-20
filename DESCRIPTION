@@ -1,0 +1,17 @@
+Package: StatComp21059
+Type: Package
+Title: Evaluation of variance reduction and generation of chain
+Version: 1.0
+Date: 2021-12-18
+Author: Tong Zhi
+Maintainer: Tong Zhi <zhit@mail.ustc.edu.cn>
+Description: The evaluation of variance reduction through antithetic variables and the generation of chain
+License: GPL (>= 2)
+Imports: Rcpp, microbenchmark, knitr, rmarkdown,MASS,boot,bootstrap
+LinkingTo: Rcpp
+RoxygenNote: 7.1.2
+Encoding: UTF-8
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+URL:http://github.com/zhitong1230/StatComp21059
+BugReports:http://github.com/zhitong1230/StatComp21059/issues

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Tong Zhi" />
+
+<meta name="date" content="2021-12-20" />
+
+<title>Introduction to StatComp21059</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to StatComp21059</h1>
+<h4 class="author">Tong Zhi</h4>
+<h4 class="date">2021-12-20</h4>
+
+
+
+<p>09-16: 1:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x,<span class="at">prob=</span>T,<span class="at">main=</span><span class="st">&quot;Normal Distribution&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x),<span class="at">add=</span>T)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>2:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>name<span class="ot">&lt;-</span><span class="st">&quot;Vivian&quot;</span>;m<span class="ot">&lt;-</span><span class="dv">7</span>;n<span class="ot">&lt;-</span><span class="dv">17</span>;k<span class="ot">&lt;-</span><span class="dv">27</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(<span class="at">pat=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;n&quot;    &quot;name&quot;</code></pre>
+<p>3:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Table1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="st">&#39;样本编码&#39;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>),<span class="st">&#39;2020&#39;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;1.57&#39;</span>,<span class="st">&#39;1.65&#39;</span>,<span class="st">&#39;1.78&#39;</span>),<span class="st">&#39;2021&#39;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;1.58&#39;</span>,<span class="st">&#39;1.68&#39;</span>,<span class="st">&#39;1.80&#39;</span>),<span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Table1</span></code></pre></div>
+<pre><code>##   样本编码 2020 2021
+## 1        A 1.57 1.58
+## 2        B 1.65 1.68
+## 3        C 1.78 1.80</code></pre>
+<p>09-22: 3.4:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">100</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>u<span class="ot">&lt;-</span><span class="fu">runif</span>(n)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sigma1<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>x1<span class="ot">&lt;-</span>{<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>sigma1<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>u)}<span class="sc">^</span>{<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>y1<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,.<span class="dv">01</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>z1<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="sc">-</span>(y1<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>sigma1<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x1,<span class="at">prob=</span><span class="cn">TRUE</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="fu">f</span>(x)<span class="sc">==</span>e<span class="sc">^</span>(<span class="sc">-</span><span class="fu">frac</span>(x<span class="sc">^</span><span class="dv">2</span>,<span class="dv">2</span><span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y1,z1)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sigma2<span class="ot">&lt;-</span><span class="dv">2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x2<span class="ot">&lt;-</span>{<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>sigma2<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>u)}<span class="sc">^</span>{<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>y2<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,.<span class="dv">01</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>z2<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="sc">-</span>(y1<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>sigma2<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x2,<span class="at">prob=</span><span class="cn">TRUE</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="fu">f</span>(x)<span class="sc">==</span>e<span class="sc">^</span>(<span class="sc">-</span><span class="fu">frac</span>(x<span class="sc">^</span><span class="dv">2</span>,<span class="dv">2</span><span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y2,z2)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>3.11:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fl">1e2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x1<span class="ot">&lt;-</span><span class="fu">rnorm</span>(n)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>x2<span class="ot">&lt;-</span><span class="fu">rnorm</span>(n,<span class="dv">3</span>,<span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fl">0.75</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>z1<span class="ot">&lt;-</span>p1<span class="sc">*</span>x1<span class="sc">+</span>(<span class="dv">1</span><span class="sc">-</span>p1)<span class="sc">*</span>x2</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(z1,<span class="at">prob=</span><span class="cn">TRUE</span>,<span class="at">breaks=</span><span class="dv">35</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="st">&quot;p=0.75&quot;</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">&lt;-</span><span class="fl">0.5</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>z2<span class="ot">&lt;-</span>p2<span class="sc">*</span>x1<span class="sc">+</span>(<span class="dv">1</span><span class="sc">-</span>p2)<span class="sc">*</span>x2</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(z2,<span class="at">prob=</span><span class="cn">TRUE</span>,<span class="at">breaks=</span><span class="dv">35</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="st">&quot;p=0.5&quot;</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">&lt;-</span><span class="fl">0.25</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>z3<span class="ot">&lt;-</span>p3<span class="sc">*</span>x1<span class="sc">+</span>(<span class="dv">1</span><span class="sc">-</span>p3)<span class="sc">*</span>x2</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(z3,<span class="at">prob=</span><span class="cn">TRUE</span>,<span class="at">breaks=</span><span class="dv">35</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="st">&quot;p=0.25&quot;</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAh1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrY6AAA6ADo6AGY6OgA6OmY6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmZgBmkLZmtttmtv+QOgCQZgCQZjqQttuQ2/+2ZgC2Zjq2kDq2kGa22/+2/9u2///T09PbkDrb////tmb/25D/27b//7b//9v///8c+m60AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAHw0lEQVR4nO2dC3uiOBSGY3da9173Mlt3tsxup0Ws+v9/35IAihT4DpLIiXzv80wHbTzA2wQIOQZzIL2YqTdAOxQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAN2C9v8tzeLz5vj6/Q9jFr+416lxPIXeBN2CEifhoXq5XbrXn16Pv5q5oMx8ejm8/15Z2K/NX3ktWptHu3y/6f+wJ1QLShbPB1tvyiq0Wz0c/yuXw6NEUHL37asxP73YPS/ajrl7LWtJs7I4N9vl43W2TI2gP62UvMbUBFW1JLl7rZfNbBPLzOf8gP3zS/At0yLILP457L+as3bTLmi7tBWqPIm5NhgULYLcnu7XZypaBW2Xrmhift18MBoCLYIKB+niGTSx1J7YjjSMhkCzoI8H6fxEf37ATmYjqK2JNU/z1k957tqtWk9wAdAiyLacD4eUxoViXurp9IG8x/F+FBYOLYIWPxbNqvH2sauRN76qp+GKlS0x/OW0FkF3377klzXN3d3/W3VWraDMnAQd3r8c+61BUSMo9MH2UigIQEEACgIoEaQXCgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAD+CzBEv4Vqih4grW7nqcGXQtzcK6g1KQSAoBYGgFASCUhAISkEgKAWBoBQEglIQCBqPoMSYh/26Z06RmQtK7ze5IzdzRsd3RectaL+2c0K4byKnHV8Wnbeg3SpvWZn7ZlfW8f2ueQtiDUIcj0FO1ehwUuIRxLOYtnBlUAoCQSMUlPIsNixK2Jv28QsKFa4MSkEgaDyC3Cm+ZRqbC8MJiUdQWs1nlHVNbHTDgnYrOKNc7fp5ll0NOzVh74xXrrNaMNfOar+judcgR9p3CE6rPtgcj0GWzHVDe+beqyY57Cxwy4Lszhc73nWAGRTOI1bQZCkwtbOYj4ljgwl6m6oWnQT9VvgZUX0OsxDU1U8fGM4nGgQlp/74qMk/b1bQqQZ5CucTHYJUhiuDUhAIOr2g3eqxNtH16HCeUSBIa7gyKAWBoDoE2YyN9MIprMPctK8CKhGU3G/s7PHJqAcx+BVUWtEhyN4Ny/K+vKKuhj5BdtJiRV0NXYLytmWfxTDyqUu3LCi/EFo879fjngVzy4L0haMgFEyXIDhqOiycB5QJ8jLv/g0L6kx9/sh22flsygt3onYRXrsmd1YsrYKqQoFv559dBwGOHf7uhnipoNP+u8Xi5XGxXVCt0GVrlW1atSA5wZfjhQFqUASCXD8DUTzWa56ChDfMEvcYqzkKkpKaRwrqZbv8bqaC8kZ2v0nwyT6/opyloGzxnNre/BQDhzEIstlRNi1Kdj/IcyJ5DILshaIVdNEdxbH3pKudLS6buwRVt6hLJqpByagHT44UdDLSJqjRNZvmGJQKLhdF4YZ9LAZBxaVifxZVqETyOARhgiWS34igcGnAMQgq+mK9R+hwieQRCCqfM532JZjNuQZl1cG5pyMaMJFcvaDa3bLesflQieTqBdV6YJMMPUcgCB5+h4STF2/pNlT/ar2O83fNx0Ijthhuovs5maDOKnNm5Wyx7TcjthhuovtJQd2b6H5SUPcmup+CEa8h4eTFYxE0VTgKQsUpCBSnIFCcgkDxuQjCN+2bCS7lol9BITJhrlWDavvRXPQoKEBloqBL98hzOAoC4SgIhKMgEI6CQDgKAuEoCISbiSDh2Hz9mvr8rrN7xy7W3q3+NV4OEXQK15+Dc0GGzqDi0rH55l/17ewPLdrvYYLaK1TL5vX+tmePZIhHVucqSDw2P1dBrEEI6dj8bAVJx+bnK0gYjoJAOAoCieQU9CHK+T1po5opBN0wFATw3Fm9PTx3Vm8Pz10N0Sp1H5WbWzugrKc0K9kqRaX8FfLyaV81yF8pZYIEnVV/q4xSEO6s+ltlnIK8QEFeVklBPkpR0NUKBfp0wFXOWFBcUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIMD1BW1/gAMibnwS3vVO0XxZJZPMynY5uxUcMdqv8x1P0YODbYJJJjCUXeMOuj8ywbh1MUUPmGXFzccimOPZzS86ZAsbXFlQZh6lY46S2iEQlN7/HZOgg3xQVjLHfgolbr9/juwYJBUkGJvM8JHcDgbfpqAMPtzd0vPU5YLJ5hYdgUiQdGwbHKjyBhbdaV4kqHcyvjq9c9IVzz63jJh+VaUgyYSyhRqJ7durQdulpP7Y/a4l5PQXvByNgsqGgU7hibDtxCYoMigIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEGAKARJE35DEIMgacJvECIQJE34DYNmQUUaTJEBREEdVOnkOOE3EMoFlTmIgoTfUOgWdErzhQm/odAtqNawpjqNqRZUz+YECb/B0CyobFbyhN8QaBZUNTBxwm8IFAuq5kV9Eif8hkCxIB1QEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEGA/wHCNpzmypZctgAAAABJRU5ErkJggg==" /><!-- --></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#根据不同的p值所做直方图，当p=0.5时会出现双峰</span></span></code></pre></div>
+<p>3.20:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fl">1e2</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lambda1<span class="ot">&lt;-</span><span class="dv">5</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Nt1<span class="ot">&lt;-</span><span class="fu">rpois</span>(n,lambda1<span class="sc">*</span>t)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>afa<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>beta<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#此处将Yi的概率密度参数设置为Ga（1，1）</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>Xt1<span class="ot">&lt;-</span><span class="fu">rgamma</span>(n,afa<span class="sc">*</span>Nt1,beta)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#由于Yi独立同分布，其和服从Ga（Nt1，1）</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Xt1,<span class="at">prob=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>EX1<span class="ot">&lt;-</span><span class="fu">sum</span>(Xt1)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>n}</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>VarX1<span class="ot">&lt;-</span><span class="fu">sum</span>((Xt1<span class="sc">-</span>EX1)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>(n<span class="dv">-1</span>)}</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#此处计算出由随机数生成的样本观测值的均值和方差</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>TRUEEX1<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda1<span class="sc">*</span>afa<span class="sc">/</span>beta</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>TRUEVarX1<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda1<span class="sc">*</span>(afa<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>afa)<span class="sc">/</span>beta</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#此处计算出由公式得出的理论均值和方差</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>EX1<span class="sc">/</span>TRUEEX1</span></code></pre></div>
+<pre><code>## [1] 1.006675</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>VarX1<span class="sc">/</span>TRUEVarX1</span></code></pre></div>
+<pre><code>## [1] 0.7408716</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#通过相除得出λ=5时，理论与实际比值在1附近</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lambda2<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Nt2<span class="ot">&lt;-</span><span class="fu">rpois</span>(n,lambda2<span class="sc">*</span>t)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Xt2<span class="ot">&lt;-</span><span class="fu">rgamma</span>(n,afa<span class="sc">*</span>Nt2,beta)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Xt2,<span class="at">prob=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAwFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmZjpmkJBmkLZmkNtmtttmtv+QOgCQZgCQZjqQkGaQkLaQtpCQttuQtv+Q2/+2ZgC2Zjq2ZpC2kDq2kGa2tpC225C229u22/+2/7a2///T09PbkDrbkGbbtmbbtpDb27bb29vb2//b/7bb////tmb/25D/27b//7b//9v///8qYCrxAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAJxElEQVR4nO2daWObNgCGlSxZ3GXdZi/dUXt36M60o8c249j8/381HQhwa3gFCCzgfT60DpaEeCwJSQgQKalFnDsDoUNBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBehJ02Ijrrfn/Jv+j9PWvr3zv8MVCiM/Vp91CXL4q/je7enwmhPj0oUXCZxH0eHfpW1AiBYil/hgLuU+1U7G2u0oW6mtxcd884SEEfUAkvAuKi6M3aowmsyu55fJeFan3CrILA5ag17fyN/zsQWVaohS9lQX/o290pg8vhLi614cjj/WnO3H5kL69U/VCHvd+JW7e3oqL5+nrhQxV7CZPICoXEFW5/jAVzOzq5bNFLqspwwmKdSlXebSCsi0qoPrV5RHeFpuvt4mw9UIKMtxatYYigSNB2XZZwYrfIk2DE2TJBKlSsE3f6IbC5NQU+VhvkTJutofIert+SP+RsT7eqkBLLWip4ornWXhNOYG43MBooaY6laSEVsXeEySzd/VX9m2UFX+d98gUKvVZHpgRtM4Cvvv9ViUgt8tDM/9qY+VkUlsvS1UvyYtTIUhZW6eNGUyQ2WJaHNty6h9UHZr9fHSsh+9tAqr0pdm/haByAseC9L5MqFzQ40q0KUADtkGPd6ZJ+SXLtTle/Wuv7eeyIHWUVz++W1UKKidwLCguWiQrSEZr5WfQftDjD7e2SXUoQcbEvlpQZQmSAS++EqUUO/gZuqN4+K5ocarbIH2sumDkjfQJQZVtkGzrl6r8LfMw+5b1Kx1QkDzeL3Q90ycedTTVZzFbgq63j5vqNqjqLJaIrDFXW8z2qLWfAUvQi7xbo8cFdf2gvA2qbaTL/aCSIFXB7s2X8gu9qz8XIu+ENWXAKvbm1g4Ydbf5IesIf2siyE1PHz44i139HMtNVYJKCRSCIjPGSE0l07v6XgQnqCVR65rQG4EIivRchSwdJ4a25yUQQdm4q9WERL8EIih9fLbIxvqBEYqgYKEgAAUBKAhAQQAKAlAQgIIAFARoJshOQXi/7hcujQTFdqYhKU05TJwmgg6bYqoquGmJvmgiaL/Krysls6lkLEGAhm1QVoTYBlVgVxHMpvywHwShIEALQUmIU8e90UyQuqi7e7otn/CnTiNBkVp4YC5bzqaZbtxR3D3RKwvYUTzBfqV6P4d/U5agCuJiORs7iieJzekrabPYb6SwHwSgIABnFAF+ZhTzNb/TK5Ce54PmLchhRnHeggYtQeI03tJ3zkeTwHhG0aOgv08RuCA8ozh3QQMmR0EopXELins/i41cUP/JURBKiYJASqMUBAerMxeEl7/MW9CwQ40RChp0sDpGQSxBCA5WEVWD1R6mI5oIqpga8ZKZSfSDTof1U9woCOXDRyJ9JEdBKCUKAilREEiJgkBKFARSoiCQEgWBlEITZB945Sm57imFJsg8jafryrpJC0o9OJq6IKOow/Ko3gWdZihB6iE16/Swab/Gt3dBDbb6FlQ8Ka5qPtUs/k3OelXjfIL2K3iHihakJ1vfv1djuAmzMwr60vipuclACcrUnG1O+vyCqpYlpEbQbqEFne2qxrkERUUlqT7NswQBzJT9TVpzr8aEBblhHnNZfdPz7AUNl1xYgmSVyZ8b3+k2g6kK8gYFDZZceILUmSmufahCXgurK+KUBUXqzQU3aVQzbXbYoAZqwoJUD1Ddall7P/NhA2YdJy4oUo+7ri0k6G7VCQuSdWu/Ui9Q6TQzPWVBupMM65Bzcu5RmswSzvE0X3V0oxTUxzrp0QhyuKO5l5t6RyMogoOwfla5jkWQw+M4+lknPR5B8Hkc8y5BLif4XtZJj0WQ0yNd+ripdyyCzjZhNhZBfqCgDI839Y5HkH4LZdRthdCUBSUX97EazQ+9PmgsglQnR/Vu6ueDnJNrEGUkglRHUQkCM4rzHazaEhTVzNr3clPvWARlbVBc012c91Aj6yrWraKa92DVgbmXIMysB6tmLAbWt/ZxU+9IBEWmcMQd19pPVlBiG+dsDWLH5BpFGYOg0mxZ3bV51+SaRRmDoNIIjEONU0fk7a09FOSUXLMoFASiUBCIMg5BcHFdk+SaRRmDIG9QkP/kKAhFoSAQhYJAFAoCUaYkaM5XNVyY91UNTPWc9AxmFF3gVQ0Ar2ogOl7VaLKk3oug0zQ54qY/ebcleM2OzoOg01sbHfGg/SAKoqBuHcXpC+rYUZy8oK6n+ckL6tpRnLwgliBE147i5AWxo9gZk1xFH5+CckHdj3mkghw7irMV5HpTb1UVC4P+BDmc5qeH547i9GAJAnjuKE4Pzx3FLNGg6VNQt0RPb/YQ2Mf+qqAgQEtB9YuFKahdohQEEqUgkOgMBDk8hKkm0ekLwlc1ahOdvCDnocZcBXGwCuBgFcHBKsJxsDoleukHTQkKAlAQgIIAFASgIAAFASgIQEEAv4J2C/N6LfUiRPhGQPVCzrVT4N0nr47C1UYwgfXM1dI1KzV4FZTIIYh+rYJ6mEwCshXr93CtHQLvV3ruIA9XG8EEPmzk97FwzEodPgWZ0X58+cp8qH+OjHngjAwDAydmBjMPVxshC2ye8uOYlVp8Cto9OXoIUf2loVwQCpyIZXJ0zHURbODsr4t7l6zU4lNQcvlypSu+MQUm1WwVcwhsBNlwIELpiwgGxvgUFKvSrUqGqfOo5metp0NgfXx5OBChkKFmrdyyUoNXQRfZr+WUK/UWht3C6RDaCUpsGx2OIJ01WetdynXRpPRUxcysZ1BVzGRDZsmlZcx/WofA7o10ngt7iSqoRtpc9Ujczq0m526BE/fTvBVkp8+DOs3rax06Ry69M9sGOQROGnQUbXGzVxVC6iiaV63rnMUO/fvIOXBea7JwtRF04NhcXFChXLJSAwerAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBAgVEG7hblpT63SSNblZb0DE6ogu/5psdSraoplvUMTrCC9PEYvhVWCOq+Dak24gtSK9FivIcrvke2yzqct4QqSZr7W5aa4XT9iCToiW2aYCzrLzegBC5InLl1irKDkHG10yIKi6//UjTFW0JkeZhCuIHWbgpZiBHV9TXdbghW0W+ibXeR5SwvKn4oxNKEKOmyy9ud6q15EXSzrHZpABckGumiZI3H9W7Gsd2ACFRQOFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQ4H/KNSocoxkGQAAAAABJRU5ErkJggg==" /><!-- --></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>EX2<span class="ot">&lt;-</span><span class="fu">sum</span>(Xt2)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>n}</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>VarX2<span class="ot">&lt;-</span><span class="fu">sum</span>((Xt2<span class="sc">-</span>EX2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>(n<span class="dv">-1</span>)}</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>TRUEEX2<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda2<span class="sc">*</span>afa<span class="sc">/</span>beta</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>TRUEVarX2<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda2<span class="sc">*</span>(afa<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>afa)<span class="sc">/</span>beta</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>EX2<span class="sc">/</span>TRUEEX2</span></code></pre></div>
+<pre><code>## [1] 1.004721</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>VarX2<span class="sc">/</span>TRUEVarX2</span></code></pre></div>
+<pre><code>## [1] 0.7720777</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#此处取λ=10，比值依旧在1附近</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lambda3<span class="ot">&lt;-</span><span class="dv">15</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Nt3<span class="ot">&lt;-</span><span class="fu">rpois</span>(n,lambda3<span class="sc">*</span>t)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Xt3<span class="ot">&lt;-</span><span class="fu">rgamma</span>(n,afa<span class="sc">*</span>Nt3,beta)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Xt3,<span class="at">prob=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>EX3<span class="ot">&lt;-</span><span class="fu">sum</span>(Xt3)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>n}</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>VarX3<span class="ot">&lt;-</span><span class="fu">sum</span>((Xt3<span class="sc">-</span>EX3)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>{<span class="dv">1</span><span class="sc">/</span>(n<span class="dv">-1</span>)}</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>TRUEEX3<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda3<span class="sc">*</span>afa<span class="sc">/</span>beta</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>TRUEVarX3<span class="ot">&lt;-</span>t<span class="sc">*</span>lambda3<span class="sc">*</span>(afa<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>afa)<span class="sc">/</span>beta</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>EX3<span class="sc">/</span>TRUEEX3</span></code></pre></div>
+<pre><code>## [1] 1.012856</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>VarX3<span class="sc">/</span>TRUEVarX3</span></code></pre></div>
+<pre><code>## [1] 1.023827</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#此处取λ=15，比值依旧在1附近</span></span></code></pre></div>
+<p>09-30: 5.4:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">1</span>, .<span class="dv">9</span>, <span class="at">length =</span> <span class="dv">9</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#由于原积分的区间为（0，x），运用变换t=ux将上下限变为（0，1）</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>     g <span class="ot">&lt;-</span> <span class="dv">30</span><span class="sc">*</span>x[i]<span class="sc">^</span><span class="dv">3</span><span class="sc">*</span>u<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>u<span class="sc">*</span>x[i])<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>     cdf[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(g)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>realvalue<span class="ot">&lt;-</span> <span class="fu">pbeta</span>(x,<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(x, cdf, realvalue)</span></code></pre></div>
+<pre><code>##                  [,1]       [,2]      [,3]      [,4]     [,5]      [,6]
+## x         0.100000000 0.20000000 0.3000000 0.4000000 0.500000 0.6000000
+## cdf       0.008668407 0.05870418 0.1654154 0.3221654 0.507504 0.6922996
+## realvalue 0.008560000 0.05792000 0.1630800 0.3174400 0.500000 0.6825600
+##                [,7]      [,8]      [,9]
+## x         0.7000000 0.8000000 0.9000000
+## cdf       0.8468703 0.9481163 0.9866508
+## realvalue 0.8369200 0.9420800 0.9914400</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#结果表明用蒙特卡洛积分所得结果与真实值非常相近</span></span></code></pre></div>
+<p>5.9:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>MC.Phi <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">sigma =</span> <span class="dv">5</span>, <span class="at">R =</span> <span class="fl">1e4</span>, <span class="at">antithetic =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">runif</span>(R<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>antithetic) </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">&lt;-</span> <span class="fu">runif</span>(R<span class="sc">/</span><span class="dv">2</span>) </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> u</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">c</span>(u, v)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  cdf <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>u<span class="sc">/</span>sigma<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="fu">exp</span> (<span class="sc">-</span>x[i]<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>u<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    cdf[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(g)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  cdf</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">1</span>, <span class="fl">2.5</span>, <span class="at">length=</span><span class="dv">5</span>)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>MC1 <span class="ot">&lt;-</span> <span class="fu">MC.Phi</span>(x, <span class="at">anti =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>MC2 <span class="ot">&lt;-</span> <span class="fu">MC.Phi</span>(x)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>MC1 <span class="ot">&lt;-</span> MC2 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m)</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>MC1[i] <span class="ot">&lt;-</span> <span class="fu">MC.Phi</span>(x, <span class="at">R =</span> <span class="fl">1e4</span>, <span class="at">anti =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>MC2[i] <span class="ot">&lt;-</span> <span class="fu">MC.Phi</span>(x, <span class="at">R =</span> <span class="fl">1e4</span>)</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sd</span>(MC1))</span></code></pre></div>
+<pre><code>## [1] 0.0003992979</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sd</span>(MC2))</span></code></pre></div>
+<pre><code>## [1] 1.813154e-05</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>((<span class="fu">var</span>(MC1) <span class="sc">-</span> <span class="fu">var</span>(MC2))<span class="sc">/</span><span class="fu">var</span>(MC1))</span></code></pre></div>
+<pre><code>## [1] 0.9979381</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#由此看到方差降低了99%，效果较好</span></span></code></pre></div>
+<p>5.13：</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>theta.hat <span class="ot">&lt;-</span> se <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">3</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#令t=1/x^2,做积分变换，将上下限变为（0，1），同时定义g（x）</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)<span class="sc">*</span>x<span class="sc">^</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>))) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>x)) <span class="sc">*</span> (x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">*</span> (x <span class="sc">&lt;</span> <span class="dv">1</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(m) <span class="co">#f0=1,相当于不使用importance function</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>f0g <span class="ot">&lt;-</span> <span class="fu">g</span>(x)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>theta.hat[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(f0g)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>se[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">sd</span>(f0g)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(m) <span class="co">#f1=exp(-1)/(1 − e^(−1)), inverse transform method</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> u <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>f1g <span class="ot">&lt;-</span> <span class="fu">g</span>(x) <span class="sc">/</span> (<span class="fu">exp</span>(<span class="sc">-</span>x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>theta.hat[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(f1g)</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>se[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">sd</span>(f1g)</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(m) <span class="co">#f2= 4/(pi*(1+x^2)), inverse transform method</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tan</span>(pi <span class="sc">*</span> u <span class="sc">/</span> <span class="dv">4</span>)</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>f2g <span class="ot">&lt;-</span> <span class="fu">g</span>(x) <span class="sc">/</span> (<span class="dv">4</span> <span class="sc">/</span> ((<span class="dv">1</span> <span class="sc">+</span> x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> pi))</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>theta.hat[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(f2g)</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>se[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sd</span>(f2g)</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(theta.hat, se)</span></code></pre></div>
+<pre><code>##                [,1]      [,2]      [,3]
+## theta.hat 0.4298927 0.3404525 0.4363304
+## se        0.2801982 0.2152394 0.2080979</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#结果表明方差降低，方法有效</span></span></code></pre></div>
+<p>5.14：</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>theta.hat <span class="ot">&lt;-</span> se <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)<span class="sc">*</span>x<span class="sc">^</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>))) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>x)) <span class="sc">*</span> (x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">*</span> (x <span class="sc">&lt;</span> <span class="dv">1</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(m) <span class="co">#f1=exp(-1)/(1 − e^(−1)), inverse transform method，同上题</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> u <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>fg <span class="ot">&lt;-</span> <span class="fu">g</span>(x) <span class="sc">/</span> (<span class="fu">exp</span>(<span class="sc">-</span>x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>theta.hat[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(fg)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>se[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">sd</span>(fg)</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(theta.hat, se)</span></code></pre></div>
+<pre><code>##                [,1]
+## theta.hat 0.4369146
+## se        0.2015765</code></pre>
+<p>10-14: 6.5:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">20</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>UCL<span class="ot">&lt;-</span><span class="fu">replicate</span>(<span class="fl">1e4</span>,<span class="at">expr =</span> {</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  x<span class="ot">&lt;-</span><span class="fu">rchisq</span>(n,<span class="at">df=</span><span class="dv">2</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(x)<span class="sc">+</span><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>,n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">#UCL全称为upper confidence level,计算的是置信区间上界</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>LowerCL<span class="ot">&lt;-</span><span class="fu">replicate</span>(<span class="fl">1e4</span>,<span class="at">expr =</span> {</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  x<span class="ot">&lt;-</span><span class="fu">rchisq</span>(n,<span class="at">df=</span><span class="dv">2</span>)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(x)<span class="sc">-</span><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>,n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co">#LowerCL全称为lower confidence level,计算的是置信区间下界</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(LowerCL<span class="sc">&lt;</span><span class="dv">2</span> <span class="sc">&amp;</span> UCL<span class="sc">&gt;</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 9163</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(LowerCL<span class="sc">&lt;</span><span class="dv">2</span> <span class="sc">&amp;</span> UCL<span class="sc">&gt;</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.9163</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#计算同时符合上界大于2、下界小于2（2在置信区间内）的个数及其概率，即coverage probability</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#本题是一个针对均值进行的双侧区间估计，最终结果表明用t检验模拟卡方分布较为稳健，而Example6.4是一个针对方差进行的单侧区间估计，用t检验进行模拟的误差较大。</span></span></code></pre></div>
+<p>6.A:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>sigma1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)<span class="co">#此处为第一小问，X服从卡方1时期望为1，标准差为根号2</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fl">1e4</span> </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m) </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(n, mu1)  <span class="co">#此处生成服从卡方1的随机数</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="at">mu =</span> mu1)<span class="co">#题中要求为双侧检验，下同</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    p[j] <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>p.hat1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(p <span class="sc">&lt;</span> alpha)</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>se.hat1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p.hat1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p.hat1) <span class="sc">/</span> m)</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(p.hat1, se.hat1))</span></code></pre></div>
+<pre><code>## [1] 0.107300000 0.003094943</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)  <span class="co">#此处为第二小问，X服从U(0,2)时，期望为1，标准差为根号下1/3</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fl">1e4</span> </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m) </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>,<span class="dv">2</span>) <span class="co">#此处生成服从U(0,2)的随机数样本</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="at">mu =</span> mu2)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    p[j] <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>p.hat2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(p <span class="sc">&lt;</span> alpha)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>se.hat2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p.hat2 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p.hat2) <span class="sc">/</span> m)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(p.hat2, se.hat2))</span></code></pre></div>
+<pre><code>## [1] 0.054100000 0.002262149</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>mu3 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sigma3 <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co">#此处为第三小问，X服从E(1)时，期望和标准差均为1</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fl">1e4</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m) </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n) <span class="co">#此处生成服从E(1)的随机数样本</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="at">mu =</span> mu3)</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    p[j] <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>p.hat3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(p <span class="sc">&lt;</span> alpha)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>se.hat3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p.hat3 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p.hat3) <span class="sc">/</span> m)</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(p.hat3, se.hat3))</span></code></pre></div>
+<pre><code>## [1] 0.083800000 0.002770876</code></pre>
+<p>3： (1)X1表示simulation得出的method1的power估计值乘以10000，即在备择假设成立的情况下拒绝原假设的次数，记p1为method1的power，则有X1服从B(10000,P1)；X2表示simulation得出的method2的power估计值乘以10000，即在备择假设成立的情况下拒绝原假设的次数，记p2为method1的power，则有X2服从B(10000,P2)，那么原问题变成如下假设检验问题： H0:P1=P2 vs Ha:P1不等于P2，显著性水平为0.05</p>
+<p>(2)由于样本量为10000，根据中心极限定理，令y1=x1/10000,表示simulation得出的method1的power估计值，y2=x2/10000,表示simulation得出的method2的power估计值，则y1服从均值为p1,方差为p1(1-p1)/10000的正态分布,y2服从均值为p2,方差为p2(1-p2)/10000的正态分布,由于y1和y2是运用相同的样本数据得出的，不具有独立性，所以不能仅用一组数据来做假设检验，应当使用paired-t test。</p>
+<p>(3)根据(2)的分析，应当进行多次simulation setting with 10000 experiments，从而得出多组y1,y2的成对数据，以此进行paired-t test.</p>
+<p>10-21: 1.repeat Example6.8: In our simulation ,we generate variables following <span class="math inline">\(N(\mu,\Sigma)\)</span>, where: <span class="math display">\[\mu=(0,0,0)^{T} , \Sigma=\left( \begin{array}{ccc}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 \end{array} \right).\]</span></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#编写一个函数Mardiatest</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>Mardiatest<span class="ot">&lt;-</span><span class="cf">function</span>(data){</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  n<span class="ot">=</span><span class="fu">nrow</span>(data)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  c<span class="ot">=</span><span class="fu">ncol</span>(data)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  x<span class="ot">&lt;-</span>data</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>c){</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    x[,i]<span class="ot">&lt;-</span>data[,i]<span class="sc">-</span><span class="fu">mean</span>(data[,i])</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  sigmahat<span class="ot">&lt;-</span><span class="fu">t</span>(x)<span class="sc">%*%</span>x<span class="sc">/</span>n</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  a<span class="ot">&lt;-</span>x<span class="sc">%*%</span><span class="fu">solve</span>(sigmahat)<span class="sc">%*%</span><span class="fu">t</span>(x)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">colSums</span>(a<span class="sc">^</span><span class="dv">3</span>))<span class="sc">/</span>(n<span class="sc">^</span><span class="dv">2</span>)<span class="co">#计算出检验统计量</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  test<span class="ot">&lt;-</span>n<span class="sc">*</span>b<span class="sc">/</span><span class="dv">6</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  cv<span class="ot">&lt;-</span><span class="fu">qchisq</span>(<span class="fl">0.95</span>,c<span class="sc">*</span>(c<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(c<span class="sc">+</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">6</span>)  <span class="co">#调用卡方分布的临界值</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>(test<span class="sc">&gt;</span>cv)  <span class="co">#通过取整函数，得到拒绝原假设的个数</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">3</span>) </span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>m<span class="ot">=</span><span class="dv">1000</span></span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>)</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="co">#m: 重复次数; n: 样本容量</span></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="fu">numeric</span>(<span class="fu">length</span>(n))</span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(n)){</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>  a[i]<span class="ot">=</span><span class="fu">mean</span>(<span class="fu">replicate</span>(m, <span class="at">expr=</span>{</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n[i],mu,sigma) <span class="co">#调用服从多元正态分布的随机数，生成矩阵data</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Mardiatest</span>(data)</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span></code></pre></div>
+<pre><code>## [1] 0.001 0.022 0.044 0.040 0.054 0.038</code></pre>
+<p>此处计算得出的a就是t1e，基本小于0.05</p>
+<p>2.repeat Example 6.10 which evaluate the power of Mardia’s multivariate skewness test under distribution <span class="math inline">\((1-\epsilon)N(\mu_{1},\Sigma_{1})+\epsilon N(\mu_{2},\Sigma_{2})\)</span>, where: <span class="math display">\[\mu_{1}=\mu_{2}=(0,0,0)^{T}, \Sigma_{1}=\left( \begin{array}{ccc}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 \end{array} \right)
+\Sigma_{2}=\left( \begin{array}{ccc}
+100 &amp; 0 &amp; 0 \\
+0 &amp; 100 &amp; 0 \\
+0 &amp; 0 &amp; 100 \end{array} \right).\]</span></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co">#把之前定义的函数再复制一遍</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>Mardiatest<span class="ot">&lt;-</span><span class="cf">function</span>(data){</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  n<span class="ot">=</span><span class="fu">nrow</span>(data)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  c<span class="ot">=</span><span class="fu">ncol</span>(data)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  x<span class="ot">&lt;-</span>data</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>c){</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    x[,i]<span class="ot">&lt;-</span>data[,i]<span class="sc">-</span><span class="fu">mean</span>(data[,i])</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  sigmahat<span class="ot">&lt;-</span><span class="fu">t</span>(x)<span class="sc">%*%</span>x<span class="sc">/</span>n</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  a<span class="ot">&lt;-</span>x<span class="sc">%*%</span><span class="fu">solve</span>(sigmahat)<span class="sc">%*%</span><span class="fu">t</span>(x)</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">colSums</span>(a<span class="sc">^</span><span class="dv">3</span>))<span class="sc">/</span>(n<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  test<span class="ot">&lt;-</span>n<span class="sc">*</span>b<span class="sc">/</span><span class="dv">6</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  cv<span class="ot">&lt;-</span><span class="fu">qchisq</span>(<span class="fl">0.95</span>,c<span class="sc">*</span>(c<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(c<span class="sc">+</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">6</span>)</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>(test<span class="sc">&gt;</span>cv)</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a><span class="co">#输入两个正态分布的参数</span></span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> mu2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">100</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">1</span></span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">2500</span></span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, .<span class="dv">15</span>, .<span class="dv">01</span>), <span class="fu">seq</span>(.<span class="dv">15</span>, <span class="dv">1</span>, .<span class="dv">05</span>))</span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(epsilon)</span>
+<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>pwr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(N)</span>
+<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) { <span class="co">#for each epsilon</span></span>
+<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a>    e <span class="ot">&lt;-</span> epsilon[j]</span>
+<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a>    sktests <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m)</span>
+<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) { <span class="co">#每次重复，以概率1-e和e抽取两个正态分布的随机样本</span></span>
+<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>       index<span class="ot">=</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> n, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">-</span>e, e))</span>
+<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>       data<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span>n,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>       <span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span>(index[t]<span class="sc">==</span><span class="dv">1</span>) </span>
+<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>            data[t,]<span class="ot">=</span><span class="fu">mvrnorm</span>(<span class="dv">1</span>,mu1,sigma1) </span>
+<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span> </span>
+<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a>            data[t,]<span class="ot">=</span><span class="fu">mvrnorm</span>(<span class="dv">1</span>,mu2,sigma2)</span>
+<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>       }  </span>
+<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a>       sktests[i] <span class="ot">&lt;-</span> <span class="fu">Mardiatest</span>(data)</span>
+<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb56-41"><a href="#cb56-41" aria-hidden="true" tabindex="-1"></a>    pwr[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(sktests)</span>
+<span id="cb56-42"><a href="#cb56-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-43"><a href="#cb56-43" aria-hidden="true" tabindex="-1"></a><span class="co">#plot power vs epsilon</span></span>
+<span id="cb56-44"><a href="#cb56-44" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(epsilon, pwr, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>,<span class="at">xlab =</span> <span class="fu">bquote</span>(epsilon), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb56-45"><a href="#cb56-45" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> .<span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb56-46"><a href="#cb56-46" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(pwr <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>pwr) <span class="sc">/</span> m) <span class="co">#add standard errors</span></span>
+<span id="cb56-47"><a href="#cb56-47" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(epsilon, pwr<span class="sc">+</span>se, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb56-48"><a href="#cb56-48" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(epsilon, pwr<span class="sc">-</span>se, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>10-28: 7.7:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bootstrap)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">nrow</span>(scor)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>lambda_hat<span class="ot">&lt;-</span><span class="fu">eigen</span>(<span class="fu">cov</span>(scor))<span class="sc">$</span>val</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>theta_hat<span class="ot">&lt;-</span>lambda_hat[<span class="fu">order</span>(lambda_hat,<span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>]]<span class="sc">/</span><span class="fu">sum</span>(lambda_hat)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>B<span class="ot">&lt;-</span><span class="fl">1e2</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>thetastar<span class="ot">&lt;-</span><span class="fu">numeric</span>(B)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (b <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>  data<span class="ot">&lt;-</span>scor[i,]</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>  lambda<span class="ot">&lt;-</span><span class="fu">eigen</span>(<span class="fu">cov</span>(data))<span class="sc">$</span>val</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  thetastar[b]<span class="ot">&lt;-</span>lambda[<span class="fu">order</span>(lambda,<span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>]]<span class="sc">/</span><span class="fu">sum</span>(lambda)</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>se<span class="ot">&lt;-</span> <span class="fu">sd</span>(thetastar)</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>bias<span class="ot">&lt;-</span> <span class="fu">mean</span>(thetastar <span class="sc">-</span> theta_hat)</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(se,bias),<span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0438 0.0019</code></pre>
+<p>7.8</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bootstrap)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(scor)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>lambda_hat <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cov</span>(scor))<span class="sc">$</span>val</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>theta_hat <span class="ot">=</span> lambda_hat[<span class="fu">order</span>(lambda_hat,<span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>]]<span class="sc">/</span><span class="fu">sum</span>(lambda_hat)</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>theta_j <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,n)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> scor [<span class="sc">-</span>i,]</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    lambda <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cov</span>(x))<span class="sc">$</span>val</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    theta_j[i] <span class="ot">=</span> lambda[<span class="fu">order</span>(lambda,<span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>]]<span class="sc">/</span><span class="fu">sum</span>(lambda)</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="co">#estimated bias of theta_hat</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>bias_jack <span class="ot">=</span> (n<span class="dv">-1</span>)<span class="sc">*</span>(<span class="fu">mean</span>(theta_j)<span class="sc">-</span>theta_hat)</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="co">#estimated se of theta_hat</span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>se_jack <span class="ot">=</span> (n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="fu">var</span>(theta_j)<span class="sc">/</span>n)</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(<span class="fu">c</span>(<span class="at">bias_jack=</span>bias_jack,<span class="at">se_jack=</span>se_jack),<span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## bias_jack   se_jack 
+##    0.0011    0.0496</code></pre>
+<p>7.9:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bootstrap)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(scor, <span class="at">package =</span> <span class="st">&quot;bootstrap&quot;</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>theta.boot<span class="ot">&lt;-</span><span class="cf">function</span>(x,i){</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  data<span class="ot">&lt;-</span>scor[i,]</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  lambda<span class="ot">&lt;-</span><span class="fu">eigen</span>(<span class="fu">cov</span>(data))<span class="sc">$</span>val</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  theta.b<span class="ot">&lt;-</span>lambda[<span class="fu">order</span>(lambda,<span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span>]]<span class="sc">/</span><span class="fu">sum</span>(lambda)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>boot.obj <span class="ot">&lt;-</span> <span class="fu">boot</span>(scor, <span class="at">statistic =</span> theta.boot, <span class="at">R =</span> <span class="dv">2000</span>)</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">975</span>)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">quantile</span>(boot.obj<span class="sc">$</span>t, alpha, <span class="at">type=</span><span class="dv">6</span>))</span></code></pre></div>
+<pre><code>##      2.5%     97.5% 
+## 0.5282721 0.7082614</code></pre>
+<p>7.B:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>skewness <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  xbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  m1 <span class="ot">&lt;-</span> <span class="fu">mean</span>((x<span class="sc">-</span>xbar)<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  m2 <span class="ot">&lt;-</span> <span class="fu">mean</span>((x<span class="sc">-</span>xbar)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( m1 <span class="sc">/</span> m2<span class="sc">^</span><span class="fl">1.5</span> )</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># the skewness of normal distribution</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># the sample size </span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fl">1e2</span> <span class="co"># replicate time </span></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>boot.skew <span class="ot">&lt;-</span> <span class="cf">function</span>(x,i) {</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skewness</span>(x[i])</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a>ci.norm <span class="ot">&lt;-</span> ci.basic <span class="ot">&lt;-</span> ci.perc <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,m,<span class="dv">2</span>)</span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m){</span>
+<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb63-19"><a href="#cb63-19" aria-hidden="true" tabindex="-1"></a>  de <span class="ot">&lt;-</span> <span class="fu">boot</span>(<span class="at">data =</span> X, <span class="at">statistic =</span> boot.skew, <span class="at">R =</span> <span class="fl">1e3</span>)</span>
+<span id="cb63-20"><a href="#cb63-20" aria-hidden="true" tabindex="-1"></a>  ci <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(de,<span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;perc&quot;</span>))</span>
+<span id="cb63-21"><a href="#cb63-21" aria-hidden="true" tabindex="-1"></a>  ci.norm[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>norm[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb63-22"><a href="#cb63-22" aria-hidden="true" tabindex="-1"></a>  ci.basic[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>basic[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb63-23"><a href="#cb63-23" aria-hidden="true" tabindex="-1"></a>  ci.perc[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>percent[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb63-24"><a href="#cb63-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb63-25"><a href="#cb63-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-26"><a href="#cb63-26" aria-hidden="true" tabindex="-1"></a>cover.prob <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.norm[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb63-27"><a href="#cb63-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mean</span>(ci.basic[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.basic[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb63-28"><a href="#cb63-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mean</span>(ci.perc[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.perc[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu))</span>
+<span id="cb63-29"><a href="#cb63-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-30"><a href="#cb63-30" aria-hidden="true" tabindex="-1"></a>left.omit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb63-31"><a href="#cb63-31" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.basic[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb63-32"><a href="#cb63-32" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.perc[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu))</span>
+<span id="cb63-33"><a href="#cb63-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-34"><a href="#cb63-34" aria-hidden="true" tabindex="-1"></a>right.omit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu),</span>
+<span id="cb63-35"><a href="#cb63-35" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.basic[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu),</span>
+<span id="cb63-36"><a href="#cb63-36" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.perc[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu))</span>
+<span id="cb63-37"><a href="#cb63-37" aria-hidden="true" tabindex="-1"></a>cover.norm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="fu">c</span>(cover.prob,left.omit,right.omit),<span class="at">nrow =</span> <span class="dv">3</span>,<span class="at">byrow =</span> <span class="cn">TRUE</span>,)</span>
+<span id="cb63-38"><a href="#cb63-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(cover.norm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;cover probability&quot;</span>,<span class="st">&quot;miss on the left&quot;</span>,<span class="st">&quot;miss on the right&quot;</span>)</span>
+<span id="cb63-39"><a href="#cb63-39" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(cover.norm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;standard normal bootstrap confidence interval&quot;</span>,<span class="st">&quot;basic bootstrap confidence interval&quot;</span>,<span class="st">&quot;percentile bootstrap confidence interval&quot;</span>)</span>
+<span id="cb63-40"><a href="#cb63-40" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cover.norm)</span></code></pre></div>
+<pre><code>##                   standard normal bootstrap confidence interval
+## cover probability                                          0.88
+## miss on the left                                           0.06
+## miss on the right                                          0.06
+##                   basic bootstrap confidence interval
+## cover probability                                0.84
+## miss on the left                                 0.08
+## miss on the right                                0.08
+##                   percentile bootstrap confidence interval
+## cover probability                                     0.97
+## miss on the left                                      0.02
+## miss on the right                                     0.01</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">8</span><span class="sc">/</span><span class="dv">5</span>)  <span class="co"># the skewness of chi-squared distribution</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># the sample size in bootstrap</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fl">1e3</span> <span class="co"># replicate time in Monte Carlo experiments</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>ci.norm <span class="ot">&lt;-</span> ci.basic <span class="ot">&lt;-</span> ci.perc <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,m,<span class="dv">2</span>)</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m){</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(n,<span class="at">df =</span> <span class="dv">5</span>)</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>  de <span class="ot">&lt;-</span> <span class="fu">boot</span>(<span class="at">data =</span> X, <span class="at">statistic =</span> boot.skew, <span class="at">R =</span> <span class="fl">1e3</span>)</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  ci <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(de,<span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;perc&quot;</span>))</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>  ci.norm[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>norm[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>  ci.basic[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>basic[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>  ci.perc[i,] <span class="ot">&lt;-</span> ci<span class="sc">$</span>percent[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a>cover.prob <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.norm[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mean</span>(ci.basic[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.basic[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mean</span>(ci.perc[,<span class="dv">1</span>]<span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> ci.perc[,<span class="dv">2</span>]<span class="sc">&gt;=</span> mu))</span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a>left.omit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.basic[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu),</span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.perc[,<span class="dv">1</span>]<span class="sc">&gt;=</span> mu))</span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a>right.omit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(ci.norm[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu),</span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.basic[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu),</span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a>               <span class="fu">mean</span>(ci.perc[,<span class="dv">2</span>]<span class="sc">&lt;=</span> mu))</span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-29"><a href="#cb65-29" aria-hidden="true" tabindex="-1"></a>cover.chisq <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="fu">c</span>(cover.prob,left.omit,right.omit),<span class="at">nrow =</span> <span class="dv">3</span>,<span class="at">byrow =</span> <span class="cn">TRUE</span>,)</span>
+<span id="cb65-30"><a href="#cb65-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(cover.chisq) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;cover probability&quot;</span>,<span class="st">&quot;miss on the left&quot;</span>,<span class="st">&quot;miss on the right&quot;</span>)</span>
+<span id="cb65-31"><a href="#cb65-31" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(cover.chisq) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;standard normal bootstrap confidence interval&quot;</span>,<span class="st">&quot;basic bootstrap confidence interval&quot;</span>,<span class="st">&quot;percentile bootstrap confidence interval&quot;</span>)</span>
+<span id="cb65-32"><a href="#cb65-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cover.chisq)</span></code></pre></div>
+<pre><code>##                   standard normal bootstrap confidence interval
+## cover probability                                         0.722
+## miss on the left                                          0.020
+## miss on the right                                         0.258
+##                   basic bootstrap confidence interval
+## cover probability                               0.699
+## miss on the left                                0.030
+## miss on the right                               0.271
+##                   percentile bootstrap confidence interval
+## cover probability                                    0.711
+## miss on the left                                     0.000
+## miss on the right                                    0.289</code></pre>
+<p>11-04: 8.2:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">68</span>, <span class="dv">68</span>, <span class="dv">77</span>, <span class="dv">74</span>, <span class="dv">77</span>, <span class="dv">80</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">61</span>, <span class="dv">67</span>, <span class="dv">69</span>, <span class="dv">76</span>, <span class="dv">74</span>, <span class="dv">80</span>, <span class="dv">68</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fl">1e3</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">c</span>(x,y)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>zt <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rank</span>(x, <span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rank</span>(y, <span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  v<span class="ot">&lt;-</span>n <span class="sc">*</span> ((n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>    r1 <span class="ot">=</span> <span class="fu">sum</span>(x[i] <span class="sc">*</span> y[i]) <span class="sc">-</span> v</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>    r2 <span class="ot">=</span> <span class="fu">sum</span>(x[i]<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span>v</span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>    r3 <span class="ot">=</span> <span class="fu">sum</span>(y[i]<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> v</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>  r1<span class="sc">/</span><span class="fu">sqrt</span>(r2 <span class="sc">*</span> r3)</span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a>zt_initial <span class="ot">&lt;-</span> <span class="fu">zt</span>(x,y)</span>
+<span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> t1 <span class="ot">&lt;-</span> t2 <span class="ot">&lt;-</span> r_permutation <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m)</span>
+<span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb67-20"><a href="#cb67-20" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> <span class="fu">sample</span>(u, <span class="at">size =</span> <span class="dv">14</span>,<span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb67-21"><a href="#cb67-21" aria-hidden="true" tabindex="-1"></a>  t1 <span class="ot">&lt;-</span> t[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]</span>
+<span id="cb67-22"><a href="#cb67-22" aria-hidden="true" tabindex="-1"></a>  t2 <span class="ot">&lt;-</span> t[<span class="dv">8</span><span class="sc">:</span><span class="dv">14</span>]</span>
+<span id="cb67-23"><a href="#cb67-23" aria-hidden="true" tabindex="-1"></a>  r_permutation[i] <span class="ot">&lt;-</span> <span class="fu">zt</span>(t1,t2)</span>
+<span id="cb67-24"><a href="#cb67-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-25"><a href="#cb67-25" aria-hidden="true" tabindex="-1"></a>p_permutation <span class="ot">&lt;-</span> <span class="fu">mean</span>(r_permutation <span class="sc">&lt;</span> zt_initial)</span>
+<span id="cb67-26"><a href="#cb67-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_permutation)</span></code></pre></div>
+<pre><code>## [1] 0.099</code></pre>
+<p>11-11: 9.3：</p>
+<pre><code>set.seed(123)
+m&lt;-2000
+x&lt;-numeric(m)
+x[1]&lt;-rt(1,1)
+k&lt;-0
+u&lt;-runif(m)
+for (i in 2:m){
+  xt&lt;-x[i-1]
+  y&lt;-rt(1,abs(xt))
+  zt1&lt;-dt(xt,abs(y))*{1/pi*(1+y^2)}
+  zt2&lt;-dt(y,abs(xt))*{1/pi*(1+xt^2)}
+  if (zt1==0){
+    c&lt;-0
+  }
+  else {
+    c&lt;-zt1/zt2
+  }
+  if (u[i]&lt;=c) 
+    x[i]&lt;-y
+  else{
+    x[i]&lt;-xt 
+    k&lt;-k+1
+  }
+}
+index&lt;-1:1000
+y1&lt;-x[index]
+y&lt;-x[1001:m]
+a&lt;-seq(0.1,0.9,0.1)
+QR&lt;-qcauchy(a)
+Q&lt;-quantile(y,a)
+qqplot(QR,Q,main=&quot;&quot;,xlab=&quot;Cauchy Quantiles&quot;,ylab=&quot;Sample Quantiles&quot;)</code></pre>
+<p>9.8:</p>
+<pre><code>N&lt;-5000
+burn&lt;-1000
+X&lt;-matrix(0,N,2)
+X[1,]&lt;-c(0,0)
+a&lt;-5
+b&lt;-10
+n&lt;-15
+for (i in 2:N) {
+  x2&lt;-X[i-1,2]
+  X[i,1]&lt;-rbinom(1,n,x2)
+  x1&lt;-X[i,1]
+  X[i,2]&lt;-rbeta(1,x1+a,n-x1+b)
+}
+d&lt;-burn+1
+x&lt;-X[d:N,]
+plot(X)</code></pre>
+<p>9.3附加：</p>
+<pre><code>set.seed(1230)
+Gelman.Rubin&lt;-function(zt){
+  zt&lt;-as.matrix(zt)
+  n&lt;-ncol(zt)
+  k&lt;-nrow(zt)
+  zt_means&lt;-rowMeans(zt)
+  B&lt;-n*var(zt_means)
+  zt_w&lt;-apply(zt,1,&quot;var&quot;)
+  W&lt;-mean(zt_w)
+  v.hat&lt;-W*(n-1)/n+(B/n)
+  r.hat&lt;-v.hat/W
+  return(r.hat)
+}
+cauchy.chain&lt;-function(sigma,N,X1){
+  x&lt;-rep(0,N)
+  x[1]&lt;-X1
+  u&lt;-runif(N)
+  for(i in 2:N){
+    xt&lt;-x[i-1]
+    y&lt;-rcauchy(1,xt,sigma)
+    r1&lt;-dcauchy(y,0,1)*dcauchy(xt,y,sigma)
+    r2&lt;-dcauchy(xt,0,1)*dcauchy(y,xt,sigma)
+    r&lt;-r1/r2
+    if(u[i]&lt;=r)
+      x[i]&lt;-y
+    else
+      x[i]&lt;-xt
+  }
+  return(x)
+}
+sigma&lt;-0.2
+k&lt;-2
+n&lt;-10000
+b&lt;-1000
+x0&lt;-c(0,0,0,0)
+X&lt;-matrix(0,nrow=k,ncol=n)
+for(i in 1:k){
+  X[i,]&lt;-cauchy.chain(sigma,n,x0[i])
+  zt&lt;-t(apply(X,1,cumsum))
+}
+for(i in 1:nrow(zt)){
+  zt[i,]&lt;-zt[i,]/(1:ncol(zt))
+}
+print(Gelman.Rubin(zt))
+#r.hat收敛至1.2以下
+par(mfrow=c(2,2))
+for(i in 1:k){
+  plot(zt[i,(b+1):n],xlab=i,ylab=bquote(zt))
+}
+par(mfrow=c(1,1))
+rhat&lt;-rep(0,n)
+for(j in (b+1):n){
+  rhat[j]&lt;-Gelman.Rubin(zt[,1:j])
+}
+plot(rhat[(b+1):n],xlab=&quot;&quot;,ylab=&quot;R&quot;)
+abline(h=1,lty=2)</code></pre>
+<p>9.8附加</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>Gelman.Rubin<span class="ot">&lt;-</span><span class="cf">function</span>(zt){</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  zt<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(zt)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  n<span class="ot">&lt;-</span><span class="fu">ncol</span>(zt)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  k<span class="ot">&lt;-</span><span class="fu">nrow</span>(zt)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  zt_means<span class="ot">&lt;-</span><span class="fu">rowMeans</span>(zt)</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>  B<span class="ot">&lt;-</span>n<span class="sc">*</span><span class="fu">var</span>(zt_means)</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>  zt_w<span class="ot">&lt;-</span><span class="fu">apply</span>(zt,<span class="dv">1</span>,<span class="st">&quot;var&quot;</span>)</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>  W<span class="ot">&lt;-</span><span class="fu">mean</span>(zt_w)</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>  v.hat<span class="ot">&lt;-</span>W<span class="sc">*</span>(n<span class="dv">-1</span>)<span class="sc">/</span>n<span class="sc">+</span>(B<span class="sc">/</span>n)</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>  r.hat<span class="ot">&lt;-</span>v.hat<span class="sc">/</span>W</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(r.hat)</span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>11-18: 11.3：</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>a_Euc<span class="ot">&lt;-</span><span class="cf">function</span>(a){<span class="co">#定义欧式距离</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">norm</span>(a,<span class="at">type=</span><span class="st">&quot;F&quot;</span>)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>k_th<span class="ot">&lt;-</span><span class="cf">function</span>(a,k){<span class="co">#计算第k项</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  d<span class="ot">&lt;-</span><span class="fu">length</span>(a)</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  (<span class="sc">-</span><span class="dv">1</span>)<span class="sc">^</span>k<span class="sc">/</span>(<span class="fu">factorial</span>(k)<span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>k)<span class="sc">*</span><span class="fu">a_Euc</span>(a)<span class="sc">^</span>(<span class="dv">2</span><span class="sc">*</span>k<span class="sc">+</span><span class="dv">2</span>)<span class="sc">/</span>((<span class="dv">2</span><span class="sc">*</span>k<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(<span class="dv">2</span><span class="sc">*</span>k<span class="sc">+</span><span class="dv">2</span>))<span class="sc">*</span><span class="fu">exp</span>(<span class="fu">lgamma</span>((d<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">lgamma</span>(k<span class="sc">+</span><span class="dv">3</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">-</span><span class="fu">lgamma</span>(k<span class="sc">+</span>d<span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>zt<span class="ot">&lt;-</span><span class="cf">function</span>(a){</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>  s<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>  k<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  g<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="fu">abs</span>(g)<span class="sc">&gt;</span><span class="fl">1e-10</span>){<span class="do">##当第k项绝对值小于1e-10时认为级数收敛</span></span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>    s<span class="ot">&lt;-</span>s<span class="sc">+</span><span class="fu">k_th</span>(a,k)</span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>    k<span class="ot">&lt;-</span>k<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>    g<span class="ot">&lt;-</span><span class="fu">k_th</span>(a,k)</span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(s)</span>
+<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a><span class="fu">zt</span>(a)<span class="co">#计算a=（1，2）时的和</span></span></code></pre></div>
+<pre><code>## [1] 1.532164</code></pre>
+<p>11.5:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="dv">4</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>C_k<span class="ot">&lt;-</span><span class="cf">function</span>(k,a){</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  (a<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>k<span class="sc">/</span>(k<span class="sc">+</span><span class="dv">1</span><span class="sc">-</span>a<span class="sc">^</span><span class="dv">2</span>))<span class="sc">^</span><span class="fl">0.5</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>gyj<span class="ot">&lt;-</span><span class="cf">function</span>(a,k){</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pt</span>(<span class="fu">C_k</span>(k,a),k)</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>zt<span class="ot">&lt;-</span><span class="fu">uniroot</span>(<span class="cf">function</span>(x) {<span class="fu">gyj</span>(x,k)<span class="sc">-</span><span class="fu">gyj</span>(x,k<span class="dv">-1</span>)},<span class="at">lower=</span><span class="dv">1</span>,<span class="at">upper=</span><span class="dv">2</span>)</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>zt<span class="sc">$</span>root</span></code></pre></div>
+<pre><code>## [1] 1.492103</code></pre>
+<p>3:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.54</span>,<span class="fl">0.48</span>,<span class="fl">0.33</span>,<span class="fl">0.43</span>,<span class="fl">0.91</span>,<span class="fl">0.21</span>,<span class="fl">0.85</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">3</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>zt<span class="ot">&lt;-</span><span class="cf">function</span>(y,lambda,x){</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  y_sum<span class="ot">&lt;-</span><span class="fu">sum</span>(y)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>  E<span class="ot">&lt;-</span>n<span class="sc">*</span><span class="fu">log</span>(x)<span class="sc">-</span>x<span class="sc">*</span>y_sum<span class="sc">-</span>x<span class="sc">*</span>m<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>lambda)</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span>E)</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span><span class="fu">optim</span>(lambda,<span class="cf">function</span>(x){<span class="fu">zt</span>(y,lambda,x)},<span class="at">method=</span><span class="st">&quot;BFGS&quot;</span>)</span></code></pre></div>
+<p>11-25: page204: 1: Since the essence of the lapply function is to iterate through each element of a list vector and process its elements using the specified function, the lapply function returns the list vector. For lapply(trims,function(trim) mean(x,trim=trim)), it means that for the given vector trims&lt;-c(0,0.1,0.2,0.5), take each element as the parameter trim to be pruned in mean function, For example, when trimS is 0.1, it means that the maximum and minimum 100*0.1=10 digits are deleted and then the average value is taken. For Lapply (trims,mean,x=x), elements in the given vector TRIMs are directly taken as parameters in mean function, and x is taken as other parameters in Lapply. Therefore, there is no need to define function in addition, and the results obtained are the same.</p>
+<p>page 204: 5:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>rsq <span class="ot">&lt;-</span> <span class="cf">function</span>(mod) <span class="fu">summary</span>(mod)<span class="sc">$</span>r.squared</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>formulas <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> disp,</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">/</span> disp),</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> disp <span class="sc">+</span> wt,</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">/</span> disp) <span class="sc">+</span> wt</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>zt1<span class="ot">&lt;-</span><span class="fu">lapply</span>(formulas, lm,<span class="at">data=</span>mtcars)</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>zt2<span class="ot">&lt;-</span><span class="fu">lapply</span>(zt1,rsq)</span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(zt2)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 0.7183433
+## 
+## [[2]]
+## [1] 0.8596865
+## 
+## [[3]]
+## [1] 0.7809306
+## 
+## [[4]]
+## [1] 0.8838038</code></pre>
+<p>page 214: 1(a):</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">cbind</span>(<span class="at">x1=</span><span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">2</span>),<span class="at">x2=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)))</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>zt<span class="ot">&lt;-</span><span class="fu">vapply</span>(x, sd, <span class="at">FUN.VALUE =</span> <span class="fu">c</span>(<span class="st">&#39;a&#39;</span><span class="ot">=</span><span class="dv">0</span>))</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(zt)</span></code></pre></div>
+<pre><code>##       x1       x2 
+## 2.581989 1.290994</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co">#结果显示第一列向量（2，4，6，8）的标准差为2.581989，第二列向量（1，2，3，4）的标准差为1.290994</span></span></code></pre></div>
+<p>(b):</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">a=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="at">b=</span><span class="fu">runif</span>(<span class="dv">5</span>),<span class="at">c=</span><span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>))</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>zt1<span class="ot">&lt;-</span><span class="fu">vapply</span>(x, is.numeric, <span class="fu">logical</span>(<span class="dv">1</span>))</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>zt2<span class="ot">&lt;-</span><span class="fu">vapply</span>(x[zt1], sd, <span class="at">FUN.VALUE =</span> <span class="fu">c</span>(<span class="st">&#39;a&#39;</span><span class="ot">=</span><span class="dv">0</span>))</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(zt2)</span></code></pre></div>
+<pre><code>##         a         b 
+## 1.5811388 0.1439638</code></pre>
+<p>page 214:7:</p>
+<pre><code>function (cl = NULL, X, fun, ..., chunk.size = NULL) 
+{
+    cl &lt;- defaultCluster(cl)
+    nchunks &lt;- staticNChunks(length(X), length(cl), chunk.size)
+    do.call(c, clusterApply(cl = cl, x = splitList(X, nchunks), 
+        fun = sapply, FUN = fun, ...), quote = TRUE)
+}</code></pre>
+<p>12-02:</p>
+<pre><code>library(Rcpp)
+library(microbenchmark)
+dir_cpp &lt;- &#39;C:/Users/支彤/Desktop/统计计算/&#39;
+sourceCpp(paste0(dir_cpp,&quot;gibbsC.cpp&quot;))
+source(paste0(dir_cpp,&quot;gibbsR.R&quot;))
+set.seed(1230)
+gibbR&lt;-gibbsR(100,10)
+gibbC&lt;-gibbsC(100,10)
+qqplot(gibbR,gibbC)
+ts &lt;- microbenchmark(gibbC=gibbsC(100,10),gibbR=gibbsR(100,10))
+summary(ts)[,c(1,3,5,6)]</code></pre>
+<p>qq图显示近似为对角线，因此可以认为两种方法所产生的随机数服从同一分布；使用microbenchmark发现Rcpp function所需的运行时间远小于pure R language</p>
+<pre><code>#用Rcpp function实现Exercise9.8
+set.seed(1115)
+cppFunction(&#39;NumericMatrix gibbsC(int N, int n,int a,int b) {
+  NumericMatrix mat(N, 2);
+  double x = 0, y = 0;
+  for(int i = 1; i &lt; N; i++) {
+    y=mat(i-1,1);
+    mat(i,0)=rbinom(1, n, y)[0];
+    x=mat(i,0);
+    mat(i,1)=rbeta(1, x+a, n-x+b)[0];
+  }
+  return(mat);
+}&#39;)
+#用r语言实现
+gibbsR &lt;- function(N, n, a, b) {
+  mat &lt;- matrix(nrow = N, ncol = 2)
+  mat[1,]&lt;-c(0,0)
+  for (i in 2:N) {
+    y&lt;-mat[i-1,2]
+    mat[i,1]&lt;-rbinom(1,n,y)
+    x&lt;-mat[i,1]
+    mat[i,2]&lt;-rbeta(1,x+a,n-x+b)
+  }
+  mat
+}</code></pre>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
